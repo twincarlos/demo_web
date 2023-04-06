@@ -14,7 +14,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(userActions.restoreUser())
-      .then(user => dispatch(cartActions.getOneCart(user.id)))
+      .then(user => user && dispatch(cartActions.getOneCart(user.id)))
       .then(() => setIsLoaded(true));
   }, [dispatch]);
 

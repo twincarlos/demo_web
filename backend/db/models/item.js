@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Item.associate = function(models) {
     // associations can be defined here
-    Item.belongsToMany(models.Cart, { through: models.Cart_Item });
+    Item.belongsToMany(models.Cart, { through: 'Cart_Items' });
   };
   return Item;
 };
