@@ -1,7 +1,6 @@
 import { csrfFetch } from "../csrf";
 
 export const GET_CART = 'cart/getCart';
-export const POST_CART = 'cart/postCart';
 export const POST_CART_ITEM = 'cart/postCartItem';
 export const PUT_CART_ITEM = 'cart/putCartItem';
 export const DELETE_CART_ITEM = 'cart/deleteCartItem';
@@ -10,13 +9,6 @@ export const DELETE_CART_ITEMS = 'cart/deleteCartItems';
 const getCart = cart => {
     return {
         type: GET_CART,
-        cart
-    };
-};
-
-const postCart = cart => {
-    return {
-        type: POST_CART,
         cart
     };
 };
@@ -55,21 +47,8 @@ export const getOneCart = cartId => async dispatch => {
     return cart;
 };
 
-export const postOneCart = userId => async dispatch => {
-    const response = await csrfFetch('/api/carts', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId })
-    });
-    const cart = await response.json();
-    dispatch(postCart(cart));
-    return cart;
-};
-
 export const postOneCartItem = data => async dispatch => {
-    const response = await csrfFetch('/api/carts/new-cart-item', {
+    const response = await csrfFetch('/api/carts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

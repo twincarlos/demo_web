@@ -12,14 +12,8 @@ router.get('/:id', async (req, res) => {
     return res.json({ cart, Items: items });
 });
 
-// POST CART
-router.post('/', async (req, res) => {
-    const cart = await Cart.create(req.body);
-    return res.json({ cart, Items: {} })
-});
-
 // POST CART ITEM
-router.post('/new-cart-item', async (req, res) => {
+router.post('/', async (req, res) => {
     const newCartItem = await Cart_Item.create(req.body);
     const cartItem = await Cart_Item.findByPk(newCartItem.id, { include: { model: Item } });
     return res.json(cartItem.Item);

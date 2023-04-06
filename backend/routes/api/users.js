@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const { setTokenCookie } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Cart } = require('../../db/models');
 
 const router = express.Router();
 
@@ -40,8 +40,11 @@ router.post(
 
         await setTokenCookie(res, user);
 
+        const cart = await Cart.create({ userId: user.id });
+
         return res.json({
             user,
+            cart: { cart, Items: {} }
         });
     }),
 );

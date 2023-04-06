@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Cart = sequelize.define('Cart', {
     userId: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       references: { model: 'Users' }
     }
   }, {});

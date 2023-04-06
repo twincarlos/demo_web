@@ -2,6 +2,7 @@ import { csrfFetch } from '../csrf';
 
 export const SET_USER = 'session/setUser';
 export const REMOVE_USER = 'session/removeUser';
+export const POST_CART = 'session/postCart';
 
 const setUser = user => {
   return {
@@ -16,6 +17,13 @@ const removeUser = () => {
   };
 };
 
+const postCart = cart => {
+  return {
+    type: POST_CART,
+    cart
+  };
+};
+
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch('/api/session', {
@@ -27,6 +35,7 @@ export const login = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
+  dispatch(postCart(data.cart));
   return response;
 };
 
@@ -34,7 +43,7 @@ export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
   const data = await response.json();
   dispatch(setUser(data.user));
-  return response;
+  return data.user;
 };
 
 export const signup = (user) => async (dispatch) => {
@@ -52,6 +61,7 @@ export const signup = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
+
   return response;
 };
 
