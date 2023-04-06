@@ -40,8 +40,8 @@ const deleteCartItems = () => {
     };
 };
 
-export const getOneCart = cartId => async dispatch => {
-    const response = await csrfFetch(`/api/carts/${cartId}`);
+export const getOneCart = userId => async dispatch => {
+    const response = await csrfFetch(`/api/carts/${userId}`);
     const cart = await response.json();
     dispatch(getCart(cart));
     return cart;

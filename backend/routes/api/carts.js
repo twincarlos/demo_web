@@ -5,7 +5,7 @@ const router = express.Router();
 
 // GET CART
 router.get('/:id', async (req, res) => {
-    const cart = await Cart.findByPk(req.params.id);
+    const cart = await Cart.findOne({ where: { userId: req.params.id }});
     const cartItems = await Cart_Item.findAll({ where: { cartId: cart.id }, include: { model: Item } });
     const items = {};
     cartItems.forEach(cartItem => items[cartItem.Item.id] = cartItem.Item);

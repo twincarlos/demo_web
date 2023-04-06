@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as userActions from "./store/thunks/user";
+import * as cartActions from "./store/thunks/cart";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
@@ -13,7 +14,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(userActions.restoreUser())
-      .then(user => console.log(user))
+      .then(user => dispatch(cartActions.getOneCart(user.id)))
       .then(() => setIsLoaded(true));
   }, [dispatch]);
 
