@@ -1,27 +1,27 @@
 'use strict';
-const { Validator } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [3, 30],
-        isNotEmail(value) {
-          if (Validator.isEmail(value)) {
-            throw new Error('Cannot be an email.');
-          }
-        }
-      }
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: [3, 256]
       }
+    },
+    phoneNumber: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true
+    },
+    firstName: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    lastName: {
+      allowNull: false,
+      type: DataTypes.STRING
     },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
@@ -48,8 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
   User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
-    const { id, username, email } = this; // context will be the User instance
-    return { id, username, email };
+    const { id, email, phoneNumber, firstName, lastName } = this; // context will be the User instance
+    return { id, email, phoneNumber, firstName, lastName };
   };
 
   User.getCurrentUserById = async function (id) {
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     const user = await User.scope('loginUser').findOne({
       where: {
         [Op.or]: {
-          username: credential,
+          phoneNumber: credential,
           email: credential
         }
       }
@@ -75,13 +75,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  User.signup = async function ({ username, email, password, profileImage }) {
+  User.signup = async function ({ phoneNumber, email, firstName, lastName, password }) {
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({
-      username,
       email,
-      hashedPassword,
-      profileImage
+      phoneNumber,
+      firstName,
+      lastName,
+      hashedPassword
     });
     return await User.scope('currentUser').findByPk(user.id);
   };

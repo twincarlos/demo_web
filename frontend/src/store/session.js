@@ -1,77 +1,33 @@
-import { csrfFetch } from './csrf';
+import * as userThunks from './thunks/user';
+import * as itemThunks from './thunks/items';
 
-const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
-
-const setUser = (user) => {
-  return {
-    type: SET_USER,
-    payload: user,
-  };
-};
-
-const removeUser = () => {
-  return {
-    type: REMOVE_USER,
-  };
-};
-
-export const login = (user) => async (dispatch) => {
-  const { credential, password } = user;
-  const response = await csrfFetch('/api/session', {
-    method: 'POST',
-    body: JSON.stringify({
-      credential,
-      password,
-    }),
-  });
-  const data = await response.json();
-  dispatch(setUser(data.user));
-  return response;
-};
-
-export const restoreUser = () => async dispatch => {
-  const response = await csrfFetch('/api/session');
-  const data = await response.json();
-  dispatch(setUser(data.user));
-  return response;
-};
-
-export const signup = (user) => async (dispatch) => {
-  const { username, email, password } = user;
-  const response = await csrfFetch("/api/users", {
-    method: "POST",
-    body: JSON.stringify({
-      username,
-      email,
-      password
-    }),
-  });
-  const data = await response.json();
-  dispatch(setUser(data.user));
-  return response;
-};
-
-export const logout = () => async (dispatch) => {
-  const response = await csrfFetch('/api/session', {
-    method: 'DELETE',
-  });
-  dispatch(removeUser());
-  return response;
-};
-
-const initialState = { user: null };
+const initialState = { user: null, items: null, item: null };
 
 const sessionReducer = (state = initialState, action) => {
-  let newState;
+  let newState = Object.assign({}, state);
+
   switch (action.type) {
-    case SET_USER:
-      newState = Object.assign({}, state);
-      newState.user = action.payload;
+    case userThunks.SET_USER:
+      newState.user = action.user;
       return newState;
-    case REMOVE_USER:
-      newState = Object.assign({}, state);
+    case userThunks.REMOVE_USER:
       newState.user = null;
+      return newState;
+    
+    case itemThunks.GET_ITEMS:
+      newState.items = action.items;
+      return newState;
+    case itemThunks.GET_ITEM:
+      newState.item = action.item;
+      return newState;
+    case itemThunks.POST_ITEM:
+    case itemThunks.PUT_ITEM:
+      newState.item = action.item;
+      if (newState.items) newState.items[action.item.id] = action.item;
+      return newState;
+    case itemThunks.DELETE_ITEM:
+      newState.item = null;
+      if (newState.items) delete newState.items[action.itemId];
       return newState;
     default:
       return state;

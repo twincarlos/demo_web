@@ -8,34 +8,27 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('Items', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING(256),
-        unique: true
-      },
-      phoneNumber: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        unique: true
-      },
-      firstName: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      lastName: {
-        allowNull: false,
-        type: Sequelize.STRING
+      description: {
+        type: Sequelize.TEXT
       },
-      hashedPassword: {
+      price: {
         allowNull: false,
-        type: Sequelize.STRING.BINARY
+        type: Sequelize.FLOAT
+      },
+      stock: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -49,8 +42,7 @@ module.exports = {
       }
     }, options);
   },
-
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Users', options);
+    return queryInterface.dropTable('Items', options);
   }
 };

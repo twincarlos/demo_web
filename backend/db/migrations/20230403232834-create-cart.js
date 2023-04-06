@@ -8,34 +8,16 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('Carts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING(256),
-        unique: true
-      },
-      phoneNumber: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        unique: true
-      },
-      firstName: {
+      localStorageId: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      lastName: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      hashedPassword: {
-        allowNull: false,
-        type: Sequelize.STRING.BINARY
       },
       createdAt: {
         allowNull: false,
@@ -49,8 +31,7 @@ module.exports = {
       }
     }, options);
   },
-
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Users', options);
+    return queryInterface.dropTable('Carts', options);
   }
 };
