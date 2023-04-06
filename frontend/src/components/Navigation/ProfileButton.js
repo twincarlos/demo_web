@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
+import * as userActions from '../../store/thunks/user';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function ProfileButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    dispatch(userActions.logout());
   };
 
   return (
@@ -35,7 +35,6 @@ function ProfileButton({ user }) {
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
-          <li>{user.username}</li>
           <li>{user.email}</li>
           <li>
             <button onClick={logout}>Log Out</button>

@@ -1,10 +1,10 @@
 import { csrfFetch } from '../csrf';
 
-const GET_ITEMS = 'items/getItems';
-const GET_ITEM = 'items/getItem';
-const POST_ITEM = 'items/postItem';
-const PUT_ITEM = 'items/putItem';
-const DELETE_ITEM = 'items/deleteItem';
+export const GET_ITEMS = 'item/getItems';
+export const GET_ITEM = 'item/getItem';
+export const POST_ITEM = 'item/postItem';
+export const PUT_ITEM = 'item/putItem';
+export const DELETE_ITEM = 'item/deleteItem';
 
 const getItems = items => {
     return {

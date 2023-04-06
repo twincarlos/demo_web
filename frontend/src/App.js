@@ -3,14 +3,16 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
-import * as sessionActions from "./store/session";
+import * as userActions from "./store/thunks/user";
 import Navigation from "./components/Navigation";
+import Home from "./components/Home";
+import Cart from "./components/Cart";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    dispatch(userActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
@@ -18,11 +20,17 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/login">
+          <Route excat path="/login">
             <LoginFormPage />
           </Route>
-          <Route path="/signup">
+          <Route excat path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route excat path="/home">
+            <Home />
+          </Route>
+          <Route excat path="/cart">
+            <Cart />
           </Route>
         </Switch>
       )}

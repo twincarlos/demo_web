@@ -1,7 +1,8 @@
 import * as userThunks from './thunks/user';
-import * as itemThunks from './thunks/items';
+import * as itemThunks from './thunks/item';
+import * as cartThunks from './thunks/cart';
 
-const initialState = { user: null, items: null, item: null };
+const initialState = { user: null, items: null, cart: null };
 
 const sessionReducer = (state = initialState, action) => {
   let newState = Object.assign({}, state);
@@ -13,22 +14,33 @@ const sessionReducer = (state = initialState, action) => {
     case userThunks.REMOVE_USER:
       newState.user = null;
       return newState;
-    
+
     case itemThunks.GET_ITEMS:
       newState.items = action.items;
       return newState;
-    case itemThunks.GET_ITEM:
-      newState.item = action.item;
-      return newState;
     case itemThunks.POST_ITEM:
     case itemThunks.PUT_ITEM:
-      newState.item = action.item;
       if (newState.items) newState.items[action.item.id] = action.item;
       return newState;
     case itemThunks.DELETE_ITEM:
-      newState.item = null;
       if (newState.items) delete newState.items[action.itemId];
       return newState;
+
+    case cartThunks.GET_CART:
+    case cartThunks.POST_CART:
+      newState.cart = action.cart;
+      return newState;
+    case cartThunks.POST_CART_ITEM:
+    case cartThunks.PUT_CART_ITEM:
+      newState.cart.Items[action.cartItem.id] = action.cartItem;
+      return newState;
+    case cartThunks.DELETE_CART_ITEM:
+      delete newState.cart.Items[action.cartItemId];
+      return newState;
+    case cartThunks.DELETE_CART_ITEMS:
+      newState.cart.Items = {};
+      return newState;
+
     default:
       return state;
   }

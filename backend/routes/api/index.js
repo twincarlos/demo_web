@@ -6,5 +6,6 @@ const itemsRouter = require('./items.js');
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/items', itemsRouter);
+router.use('/carts', cartsRouter);
 
 module.exports = router;
