@@ -34,10 +34,10 @@ const sessionReducer = (state = initialState, action) => {
       return newState;
     case cartThunks.POST_CART_ITEM:
     case cartThunks.PUT_CART_ITEM:
-      newState.cart.Items[action.cartItem.id] = action.cartItem;
+      newState.cart.items[action.cartItem.item.id] = action.cartItem;
       return newState;
     case cartThunks.DELETE_CART_ITEM:
-      delete newState.cart.Items[action.cartItemId];
+      delete newState.cart.items[action.itemId];
       return newState;
     case cartThunks.DELETE_CART_ITEMS:
       newState.cart.Items = {};

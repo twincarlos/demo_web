@@ -27,10 +27,10 @@ const putCartItem = cartItem => {
     };
 };
 
-const deleteCartItem = cartItemId => {
+const deleteCartItem = itemId => {
     return {
         type: DELETE_CART_ITEM,
-        cartItemId
+        itemId
     };
 };
 
@@ -73,12 +73,12 @@ export const putOneCartItem = data => async dispatch => {
     return cartItem;
 };
 
-export const deleteOneCartItem = cartItemId => async dispatch => {
-    await csrfFetch(`/api/carts/delete-cart-item/${cartItemId}`, { method: 'DELETE' })
-        .then(dispatch(deleteCartItem(cartItemId)));
+export const deleteOneCartItem = data => async dispatch => {
+    await csrfFetch('/api/carts/delete-cart-item', { method: 'DELETE', body: JSON.stringify(data) })
+        .then(dispatch(deleteCartItem(data.itemId)));
 };
 
 export const deleteAllCartItems = cartId => async dispatch => {
-    await csrfFetch(`/api/carts/delete-cart-item/${cartId}`, { method: 'DELETE' })
+    await csrfFetch(`/api/carts/clear-cart/${cartId}`, { method: 'DELETE' })
         .then(dispatch(deleteCartItems()));
 };

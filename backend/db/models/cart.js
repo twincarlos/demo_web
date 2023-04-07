@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   Cart.associate = function(models) {
     // associations can be defined here
     Cart.belongsTo(models.User, { foreignKey: 'userId' });
-    Cart.belongsToMany(models.Item, { through: 'Cart_Items' });
+    Cart.belongsToMany(models.Item, { through: models.Cart_Item, foreignKey: 'cartId', otherKey: 'itemId' });
   };
   return Cart;
 };
