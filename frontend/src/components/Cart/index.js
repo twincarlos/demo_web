@@ -7,6 +7,8 @@ function Cart() {
     const cart = useSelector(state => state.session.cart);
     const [itemQuantity, setItemQuantity] = useState(1);
 
+    if (!cart) return null;
+
     return (
         <div style={{ display: 'flex' }}>
             <input type='number' onChange={e => setItemQuantity(Number(e.target.value))}></input>

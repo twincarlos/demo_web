@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as userActions from '../../store/thunks/user';
+import * as cartActions from '../../store/thunks/cart';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ function LoginFormPage() {
     e.preventDefault();
     setErrors([]);
     return dispatch(userActions.login({ credential, password }))
+      .then(user => dispatch(cartActions.getOneCart(user.id)))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);

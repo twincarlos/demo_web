@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as userActions from "../../store/thunks/user";
+import * as cartActions from "../../store/thunks/cart";
 
 import './SignupForm.css';
 
@@ -23,6 +24,7 @@ function SignupFormPage() {
     if (password === confirmPassword) {
       setErrors([]);
       return dispatch(userActions.signup({ email, phoneNumber, firstName, lastName, password }))
+        .then(user => dispatch(cartActions.postOneCart(user.id)))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);

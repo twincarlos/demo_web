@@ -5,6 +5,7 @@ const router = express.Router();
 
 // GET CART
 router.get('/:id', async (req, res) => {
+    console.log(req.params.id);
     const cart = await Cart.findOne({ where: { userId: req.params.id } });
     const cartItems = await Cart_Item.findAll({ where: { cartId: cart.id } });
     const items = {};
@@ -13,6 +14,12 @@ router.get('/:id', async (req, res) => {
         items[item.id] = { ...item.dataValues, ...cartItem.dataValues };
     };
     return res.json({ cartDetails: cart, cartItems: items });
+});
+
+// POST CART
+router.post('/new-cart', async (req, res) => {
+    const cart = await Cart.create(req.body);
+    return res.json({ cartDetails: cart, cartItems: {} });
 });
 
 // POST CART ITEM

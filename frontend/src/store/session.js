@@ -17,11 +17,6 @@ const sessionReducer = (state = initialState, action) => {
         ...state,
         user: null
       };
-    case userThunks.POST_CART:
-      return {
-        ...state,
-        cart: action.cart
-      };
 
     case itemThunks.GET_ITEMS:
       return {
@@ -52,6 +47,7 @@ const sessionReducer = (state = initialState, action) => {
       break;
 
     case cartThunks.GET_CART:
+    case cartThunks.POST_CART:
       return {
         ...state,
         cart: action.cart

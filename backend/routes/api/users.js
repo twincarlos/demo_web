@@ -40,11 +40,8 @@ router.post(
 
         await setTokenCookie(res, user);
 
-        const cart = await Cart.create({ userId: user.id });
-
         return res.json({
-            user,
-            cart: { cartDetails: cart, cartItems: {} }
+            user
         });
     }),
 );
