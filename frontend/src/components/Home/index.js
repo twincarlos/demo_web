@@ -8,6 +8,7 @@ function Home() {
     const items = useSelector(state => state.session.items);
     const cart = useSelector(state => state.session.cart);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [itemQuantity, setItemQuantity] = useState(1);
 
     useEffect(() => {
         dispatch(itemActions.getAllItems())
@@ -18,6 +19,7 @@ function Home() {
 
     return (
         <div style={{ display: 'flex' }}>
+            <input type='number' onChange={e => setItemQuantity(e.target.value)}></input>
             {
                 Object.values(items).map(item => (
                     <div style={{ border: '1px solid black', padding: '10px' }} key={item.id}>
@@ -25,7 +27,7 @@ function Home() {
                         <p>{item.price}</p>
                         <p>{item.stock}</p>
                         <button onClick={() => {
-                            dispatch(cartActions.postOneCartItem({ cartId: cart.cartDetails.id, itemId: item.id, quantity: 1 }));
+                            dispatch(cartActions.postOneCartItem({ cartId: cart.cartDetails.id, itemId: item.id, quantity: Number(itemQuantity) }));
                         }}>Add to cart</button>
                     </div>
                 ))

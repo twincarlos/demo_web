@@ -11,7 +11,7 @@ function Cart() {
 
     return (
         <div style={{ display: 'flex' }}>
-            <input type='number' onChange={e => setItemQuantity(Number(e.target.value))}></input>
+            <input type='number' onChange={e => setItemQuantity(e.target.value)}></input>
             {
                 Object.values(cart.cartItems).map(cartItem => (
                     <div style={{ border: '1px solid black', padding: '10px' }} key={cartItem.id}>
@@ -19,7 +19,7 @@ function Cart() {
                         <p>{cartItem.price}</p>
                         <p>{cartItem.quantity}</p>
                         <button onClick={() => {
-                            dispatch(cartActions.putOneCartItem({ cartId: cart.cartDetails.id, itemId: cartItem.id, quantity: itemQuantity }));
+                            dispatch(cartActions.putOneCartItem({ cartId: cart.cartDetails.id, itemId: cartItem.id, quantity: Number(itemQuantity) }));
                         }}>Update</button>
                         <button onClick={() => {
                             dispatch(cartActions.deleteOneCartItem({ cartId: cart.cartDetails.id, itemId: cartItem.id }))

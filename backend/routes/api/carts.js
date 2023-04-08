@@ -5,8 +5,12 @@ const router = express.Router();
 
 // GET CART
 router.get('/:id', async (req, res) => {
-    console.log(req.params.id);
-    const cart = await Cart.findOne({ where: { userId: req.params.id } });
+    let cart = await Cart.findOne({ where: { userId: req.params.id } });
+
+    if (!cart) {
+        cart = await Cart.create({ userId: req.params.id });
+    };
+
     const cartItems = await Cart_Item.findAll({ where: { cartId: cart.id } });
     const items = {};
     for (let cartItem of cartItems) {
