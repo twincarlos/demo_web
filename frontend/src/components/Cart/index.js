@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as cartActions from '../../store/thunks/cart';
+import * as orderActions from '../../store/thunks/order';
 
 function Cart() {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.session.cart);
+    const user = useSelector(state => state.session.user);
     const [itemQuantity, setItemQuantity] = useState(1);
 
     if (!cart) return null;
@@ -24,12 +26,23 @@ function Cart() {
                         <button onClick={() => {
                             dispatch(cartActions.deleteOneCartItem({ cartId: cart.cartDetails.id, itemId: cartItem.id }))
                         }}>Remove</button>
-                        <button onClick={() => {
-                            dispatch(cartActions.deleteAllCartItems(cart.cartDetails.id))
-                        }}>Clear</button>
                     </div>
                 ))
             }
+            <button onClick={() => {
+                dispatch(cartActions.deleteAllCartItems(cart.cartDetails.id))
+            }}>Clear</button>
+            <button onClick={() => {
+                const orderDetails = {
+                    cartId: cart.cartDetails.id,
+                    userId: user ? user.id : localStorage.getItem('userId'),
+                    userFirstName: 'Carlos',
+                    userLastName: 'Rodriguez',
+                    userEmail: 'twincarlos98@gmail.com',
+                    userPhoneNumber: '3053388415'
+                };
+                dispatch(orderActions.postOneOrder(orderDetails));
+            }}>Check out</button>
         </div>
     );
 };

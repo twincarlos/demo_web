@@ -1,8 +1,9 @@
 import * as userThunks from './thunks/user';
 import * as itemThunks from './thunks/item';
 import * as cartThunks from './thunks/cart';
+import * as orderThunks from './thunks/order';
 
-const initialState = { user: null, items: null, cart: null };
+const initialState = { user: null, items: null, cart: null, item: null, order: null, orders: null };
 
 const sessionReducer = (state = initialState, action) => {
 
@@ -22,6 +23,11 @@ const sessionReducer = (state = initialState, action) => {
       return {
         ...state,
         items: action.items
+      };
+    case itemThunks.GET_ITEM:
+      return {
+        ...state,
+        item: action.item
       };
     case itemThunks.POST_ITEM:
     case itemThunks.PUT_ITEM:
@@ -80,6 +86,25 @@ const sessionReducer = (state = initialState, action) => {
         cart: {
           ...state.cartItems,
           cartItems: {}
+        }
+      };
+
+    case orderThunks.GET_ORDERS:
+      return {
+        ...state,
+        orders: action.orders
+      };
+    case orderThunks.GET_ORDER:
+      return {
+        ...state,
+        order: action.order
+      };
+    case orderThunks.POST_ORDER:
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          [action.order.id]: action.order
         }
       };
 

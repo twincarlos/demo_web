@@ -1,10 +1,10 @@
 import { csrfFetch } from '../csrf';
 
-export const GET_ITEMS = 'item/getItems';
-export const GET_ITEM = 'item/getItem';
-export const POST_ITEM = 'item/postItem';
-export const PUT_ITEM = 'item/putItem';
-export const DELETE_ITEM = 'item/deleteItem';
+export const GET_ITEMS = 'items/getItems';
+export const GET_ITEM = 'items/getItem';
+export const POST_ITEM = 'items/postItem';
+export const PUT_ITEM = 'items/putItem';
+export const DELETE_ITEM = 'items/deleteItem';
 
 const getItems = items => {
     return {
@@ -15,9 +15,9 @@ const getItems = items => {
 
 const getItem = item => {
     return {
-        type: GET_ITEM,
+        type: GET_ITEMS,
         item
-    }
+    };
 };
 
 const postItem = item => {

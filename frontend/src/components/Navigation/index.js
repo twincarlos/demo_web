@@ -32,6 +32,8 @@ function Navigation({ isLoaded }) {
     <ul>
       <li>
         <NavLink exact to="/">Home</NavLink>
+        <NavLink to="/cart">My Cart</NavLink>
+        <NavLink to="/orders">My Orders</NavLink>
         {sessionUser ?
           (
             <>

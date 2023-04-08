@@ -1,11 +1,11 @@
 import { csrfFetch } from "../csrf";
 
-export const GET_CART = 'cart/getCart';
-export const POST_CART = 'cart/postCart';
-export const POST_CART_ITEM = 'cart/postCartItem';
-export const PUT_CART_ITEM = 'cart/putCartItem';
-export const DELETE_CART_ITEM = 'cart/deleteCartItem';
-export const DELETE_CART_ITEMS = 'cart/deleteCartItems';
+export const GET_CART = 'carts/getCart';
+export const POST_CART = 'carts/postCart';
+export const POST_CART_ITEM = 'carts/postCartItem';
+export const PUT_CART_ITEM = 'carts/putCartItem';
+export const DELETE_CART_ITEM = 'carts/deleteCartItem';
+export const DELETE_CART_ITEMS = 'carts/deleteCartItems';
 
 const getCart = cart => {
     return {

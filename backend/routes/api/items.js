@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
 });
 
 // GET ONE ITEM
-router.get('/:id', async (req, res) => {
-    const item = await Item.findByPk(req.params.id);
+router.get('/:itemId', async (req, res) => {
+    const item = await Item.findByPk(req.params.itemId);
     return res.json(item);
 });
 
@@ -28,16 +28,16 @@ router.post('/', async (req , res) => {
 });
 
 // PUT ITEM
-router.put('/:id', async (req, res) => {
-    const item = await Item.findByPk(req.params.id);
+router.put('/:itemId', async (req, res) => {
+    const item = await Item.findByPk(req.params.itemId);
     await item.update(req.body);
     await item.save();
     return res.json(item);
 });
 
 // DELETE ITEM
-router.delete('/:id', async (req, res) => {
-    const item = await Item.findByPk(req.params.id);
+router.delete('/:itemId', async (req, res) => {
+    const item = await Item.findByPk(req.params.itemId);
     await item.destroy();
 });
 

@@ -5,9 +5,11 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as userActions from "./store/thunks/user";
 import * as cartActions from "./store/thunks/cart";
+import * as orderActions from "./store/thunks/order";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
+import Orders from "./components/Orders";
 import { v4 as uuid } from 'uuid';
 
 function App() {
@@ -17,16 +19,19 @@ function App() {
     dispatch(userActions.restoreUser())
       .then(user => {
         if (user) {
-          dispatch(cartActions.getOneCart(user.id));
+          dispatch(cartActions.getOneCart(user.id))
+            .then(dispatch(orderActions.getAllOrders(user.id)));
         } else {
           let userId = localStorage.getItem('userId');
           if (userId) {
-            dispatch(cartActions.getOneCart(userId));
+            dispatch(cartActions.getOneCart(userId))
+              .then(dispatch(orderActions.getAllOrders(userId)));
           } else {
-            let userId = uuid();
-            localStorage.setItem('userId', userId)
+            userId = uuid();
+            localStorage.setItem('userId', userId);
             dispatch(cartActions.postOneCart(userId))
-              .then(dispatch(cartActions.getOneCart(userId)));
+              .then(dispatch(cartActions.getOneCart(userId)))
+              .then(dispatch(orderActions.getAllOrders(userId)));
           };
         };
       })
@@ -49,6 +54,9 @@ function App() {
           </Route>
           <Route excat path="/cart">
             <Cart />
+          </Route>
+          <Route excat path="/orders">
+            <Orders />
           </Route>
         </Switch>
       )}
