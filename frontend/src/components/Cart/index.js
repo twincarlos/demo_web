@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as itemActions from '../../store/thunks/item';
 import * as cartActions from '../../store/thunks/cart';
 
 function Cart() {
@@ -12,19 +11,19 @@ function Cart() {
         <div style={{ display: 'flex' }}>
             <input type='number' onChange={e => setItemQuantity(Number(e.target.value))}></input>
             {
-                Object.values(cart.items).map(item => (
-                    <div style={{ border: '1px solid black', padding: '10px' }} key={item.item.id}>
-                        <p>{item.item.name}</p>
-                        <p>{item.item.price}</p>
-                        <p>{item.cartItem.quantity}</p>
+                Object.values(cart.cartItems).map(cartItem => (
+                    <div style={{ border: '1px solid black', padding: '10px' }} key={cartItem.id}>
+                        <p>{cartItem.name}</p>
+                        <p>{cartItem.price}</p>
+                        <p>{cartItem.quantity}</p>
                         <button onClick={() => {
-                            dispatch(cartActions.putOneCartItem({ cartId: cart.cart.id, itemId: item.item.id, quantity: itemQuantity }));
+                            dispatch(cartActions.putOneCartItem({ cartId: cart.cartDetails.id, itemId: cartItem.id, quantity: itemQuantity }));
                         }}>Update</button>
                         <button onClick={() => {
-                            dispatch(cartActions.deleteOneCartItem({ cartId: cart.cart.id, itemId: item.item.id }))
+                            dispatch(cartActions.deleteOneCartItem({ cartId: cart.cartDetails.id, itemId: cartItem.id }))
                         }}>Remove</button>
                         <button onClick={() => {
-                            dispatch(cartActions.deleteAllCartItems(cart.cart.id))
+                            dispatch(cartActions.deleteAllCartItems(cart.cartDetails.id))
                         }}>Clear</button>
                     </div>
                 ))

@@ -25,7 +25,7 @@ function Home() {
                         <p>{item.price}</p>
                         <p>{item.stock}</p>
                         <button onClick={() => {
-                            dispatch(cartActions.postOneCartItem({ cartId: cart?.cart.id, itemId: item.id, quantity: 1 }));
+                            dispatch(cartActions.postOneCartItem({ cartId: cart.cartDetails.id, itemId: item.id, quantity: 1 }));
                         }}>Add to cart</button>
                     </div>
                 ))

@@ -10,16 +10,25 @@ router.get('/:id', async (req, res) => {
     const items = {};
     for (let cartItem of cartItems) {
         const item = await Item.findByPk(cartItem.itemId);
-        items[item.id] = { item, cartItem };
+        items[item.id] = { ...item.dataValues, ...cartItem.dataValues };
     };
-    return res.json({ cart, items });
+    return res.json({ cartDetails: cart, cartItems: items });
 });
 
 // POST CART ITEM
 router.post('/', async (req, res) => {
-    const cartItem = await Cart_Item.create(req.body);
+    let cartItem;
+
+    cartItem = await Cart_Item.findOne({ where: { cartId: req.body.cartId, itemId: req.body.itemId } });
+
+    if (cartItem) {
+        await cartItem.update({ quantity: cartItem.quantity + req.body.quantity });
+    } else {
+        cartItem = await Cart_Item.create(req.body);
+    };
+    
     const item = await Item.findByPk(cartItem.itemId);
-    return res.json({ item, cartItem });
+    return res.json({ ...item.dataValues, ...cartItem.dataValues });
 });
 
 // PUT CART ITEM
@@ -29,7 +38,7 @@ router.put('/', async (req, res) => {
     await cartItem.update({ quantity });
     await cartItem.save();
     const item = await Item.findByPk(cartItem.itemId);
-    return res.json({ item, cartItem });
+    return res.json({ ...item.dataValues, ...cartItem.dataValues });
 });
 
 // DELETE CART ITEM

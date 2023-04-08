@@ -27,10 +27,10 @@ const putCartItem = cartItem => {
     };
 };
 
-const deleteCartItem = itemId => {
+const deleteCartItem = cartItemId => {
     return {
         type: DELETE_CART_ITEM,
-        itemId
+        cartItemId
     };
 };
 

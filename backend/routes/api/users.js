@@ -44,7 +44,7 @@ router.post(
 
         return res.json({
             user,
-            cart: { cart, Items: {} }
+            cart: { cartDetails: cart, cartItems: {} }
         });
     }),
 );
