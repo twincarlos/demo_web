@@ -13,14 +13,14 @@ const getOrders = orders => {
 
 const getOrder = order => {
     return {
-        type: GET_ORDERS,
+        type: GET_ORDER,
         order
     };
 };
 
 const postOrder = order => {
     return {
-        type: GET_ORDERS,
+        type: POST_ORDER,
         order
     };
 };
