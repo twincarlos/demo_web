@@ -1,5 +1,4 @@
 const express = require('express');
-// const { v4: uuid } = require('uuid');
 const { Item, Cart_Item, Order, Order_Item } = require('../../db/models');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); 
 
@@ -19,11 +18,9 @@ router.get('/one-order/:orderId', async (req, res) => {
     return res.json(order);
 });
 
-// POST ORDER
-router.post('/', async (req, res) => {
-    const { cartId, userId, userFirstName, userLastName, userEmail, userPhoneNumber } = req.body;
-    const cartItems = await Cart_Item.findAll({ where: { cartId } });
-    let netTotal = 0.00;
+// CHECKOUT
+router.post('/checkout/:cartId', async (req, res) => {
+    const cartItems = await Cart_Item.findAll({ where: { cartId: req.params.cartId } });
     const line_items = [];
 
     for (let cartItem of cartItems) {
@@ -43,23 +40,18 @@ router.post('/', async (req, res) => {
             },
             quantity: cartItem.quantity
         });
-
-        netTotal += cartItem.quantity * item.price;
     };
-
-    console.log(line_items);
 
     const stripeCheckout = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items,
         mode: 'payment',
-        success_url: `${process.env.SERVER_URL}/orders`,
-        success_url: `${process.env.SERVER_URL}/cart`
+        success_url: `${process.env.CORS_ORIGIN}/stripe-checkout/success/{CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.CORS_ORIGIN}/stripe-checkout/cancel/{CHECKOUT_SESSION_ID}`,
     });
 
-    res.redirect(303, stripeCheckout.url);
-
-    // console.log(stripeCheckout);
+    return res.json(stripeCheckout);
+});
 
     // const confirmationNumber = stripeCheckout.id;
     // const newOrder = await Order.create({ userId, userFirstName, userLastName, userEmail, userPhoneNumber, confirmationNumber, netTotal: netTotal.toFixed(2) });
@@ -73,6 +65,5 @@ router.post('/', async (req, res) => {
 
     // const order = await Order.findByPk(newOrder.id, { include: { model: Order_Item, as: 'orderItems' } });
     // return res.json(order);
-});
 
 module.exports = router;

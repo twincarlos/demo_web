@@ -33,15 +33,17 @@ function Cart() {
                 dispatch(cartActions.deleteAllCartItems(cart.cartDetails.id))
             }}>Clear</button>
             <button onClick={() => {
-                const orderDetails = {
-                    cartId: cart.cartDetails.id,
-                    userId: user ? user.id : localStorage.getItem('userId'),
-                    userFirstName: 'Carlos',
-                    userLastName: 'Rodriguez',
-                    userEmail: 'twincarlos98@gmail.com',
-                    userPhoneNumber: '3053388415'
-                };
-                dispatch(orderActions.postOneOrder(orderDetails));
+                // const orderDetails = {
+                //     cartId: cart.cartDetails.id,
+                //     userId: user ? user.id : localStorage.getItem('userId'),
+                //     userFirstName: 'Carlos',
+                //     userLastName: 'Rodriguez',
+                //     userEmail: 'twincarlos98@gmail.com',
+                //     userPhoneNumber: '3053388415'
+                // };
+                // dispatch(orderActions.postOneOrder(orderDetails));
+                dispatch(orderActions.checkout(cart.cartDetails.id))
+                    .then(stripeCheckout => window.location = stripeCheckout.url);
             }}>Check out</button>
         </div>
     );

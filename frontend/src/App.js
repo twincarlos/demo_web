@@ -10,6 +10,8 @@ import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
 import Orders from "./components/Orders";
+import Success from "./components/Checkout/Success";
+import Cancel from "./components/Checkout/Cancel";
 import { v4 as uuid } from 'uuid';
 
 function App() {
@@ -46,17 +48,23 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route excat path="/login">
+          <Route exact path="/login">
             <LoginFormPage />
           </Route>
-          <Route excat path="/signup">
+          <Route exact path="/signup">
             <SignupFormPage />
           </Route>
-          <Route excat path="/cart">
+          <Route exact path="/cart">
             <Cart />
           </Route>
-          <Route excat path="/orders">
+          <Route exact path="/orders">
             <Orders />
+          </Route>
+          <Route exact path="/stripe-checkout/success/:stripeSessionId">
+            <Success />
+          </Route>
+          <Route exact path="/stripe-checkout/cancel/:stripeSessionId">
+            <Cancel />
           </Route>
         </Switch>
       )}

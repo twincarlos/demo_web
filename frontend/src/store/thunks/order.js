@@ -51,3 +51,14 @@ export const postOneOrder = data => async dispatch => {
     dispatch(postOrder(order));
     return order;
 };
+
+export const checkout = cartId => async () => {
+    const response = await csrfFetch(`/api/orders/checkout/${cartId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const stripeCheckout = response.json();
+    return stripeCheckout;
+};
