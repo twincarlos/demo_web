@@ -48,8 +48,10 @@ export const postOneOrder = data => async dispatch => {
         body: JSON.stringify(data)
     });
     const order = await response.json();
-    dispatch(postOrder(order));
-    return order;
+    if (order) {
+        dispatch(postOrder(order));
+        return order;
+    };
 };
 
 export const checkout = cartId => async () => {

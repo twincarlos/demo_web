@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { Item, Cart, Cart_Item, Order, Order_Item } = require('../../db/models');
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const ShortUniqueId = require('short-unique-id');
 
 const router = express.Router();
@@ -48,14 +48,14 @@ router.post('/checkout/:cartId', async (req, res) => {
         });
     };
 
-    const uid = new ShortUniqueId({ length: 6 })();
+    const uuid = new ShortUniqueId({ length: 6 })().toUpperCase();
 
     const stripeCheckout = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items,
         mode: 'payment',
-        success_url: `${process.env.CORS_ORIGIN}/stripe-checkout/success?stripeSessionId=${uid}&cartId=${req.params.cartId}&userId=${cart.userId}&netTotal=${netTotal.toFixed(2)}`,
-        cancel_url: `${process.env.CORS_ORIGIN}/stripe-checkout/cancel?stripeSessionId=${uid}&cartId=${req.params.cartId}&userId=${cart.userId}&netTotal=${netTotal.toFixed(2)}`,
+        success_url: `${process.env.CORS_ORIGIN}/stripe-checkout/success/${uuid}/${req.params.cartId}/${cart.userId}/${netTotal.toFixed(2)}`,
+        cancel_url: `${process.env.CORS_ORIGIN}/stripe-checkout/cancel/${uuid}/${req.params.cartId}/${cart.userId}/${netTotal.toFixed(2)}`,
     });
 
     return res.json(stripeCheckout);
@@ -63,8 +63,15 @@ router.post('/checkout/:cartId', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const { userId, cartId, userFirstName, userLastName, userEmail, userPhoneNumber, confirmationNumber, netTotal } = req.body;
+
+    const verifyOrder = await Order.findOne({ where: { confirmationNumber } });
+
+    if (verifyOrder) {
+        return res.json(null);
+    };
+
     const newOrder = await Order.create({ userId, userFirstName, userLastName, userEmail, userPhoneNumber, confirmationNumber, netTotal });
-    const cartItems = await Item.findAll({ where: { cartId } });
+    const cartItems = await Cart_Item.findAll({ where: { cartId } });
 
     for (let cartItem of cartItems) {
         const item = await Item.findByPk(cartItem.itemId);
@@ -73,7 +80,7 @@ router.post('/', async (req, res) => {
         item.save();
     };
 
-    const order = await Order.findOne({ where: { orderId: newOrder.id }, include: { model: Order_Item, as: 'orderItems' } });
+    const order = await Order.findByPk(newOrder.id, { include: { model: Order_Item, as: 'orderItems' } });
     return res.json(order);
 });
 
