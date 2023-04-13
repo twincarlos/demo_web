@@ -60,10 +60,10 @@ function App() {
           <Route exact path="/orders">
             <Orders />
           </Route>
-          <Route exact path="/stripe-checkout/success/:stripeSessionId">
+          <Route exact path="/stripe-checkout/success">
             <Success />
           </Route>
-          <Route exact path="/stripe-checkout/cancel/:stripeSessionId">
+          <Route exact path="/stripe-checkout/cancel">
             <Cancel />
           </Route>
         </Switch>

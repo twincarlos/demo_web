@@ -33,6 +33,7 @@
     "pg": "^8.7.3",
     "sequelize": "^5.22.5",
     "sequelize-cli": "^5.5.1",
+    "short-unique-id": "^4.4.4",
     "stripe": "^12.0.0"
   },
   "devDependencies": {
