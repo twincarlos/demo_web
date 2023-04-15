@@ -75,7 +75,7 @@ router.post('/', async (req, res) => {
 
     for (let cartItem of cartItems) {
         const item = await Item.findByPk(cartItem.itemId);
-        await Order_Item.create({ orderId: newOrder.id, itemName: item.name, itemDescription: item.description, itemPrice: item.price, itemQuantity: cartItem.quantity, netTotal: (item.price * cartItem.quantity).toFixed(2) });
+        await Order_Item.create({ orderId: newOrder.id, itemName: item.name, itemImage: item.image, itemDescription: item.description, itemPrice: item.price, itemQuantity: cartItem.quantity, netTotal: (item.price * cartItem.quantity).toFixed(2) });
         item.update({ stock: item.stock - cartItem.quantity });
         item.save();
     };

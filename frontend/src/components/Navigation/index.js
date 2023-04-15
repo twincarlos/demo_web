@@ -15,40 +15,38 @@ function Navigation({ isLoaded }) {
   function logOut(e) {
     e.preventDefault();
     dispatch(userActions.logout())
-    .then(() => {
-      let userId = localStorage.getItem('userId');
-      if (userId) {
-        dispatch(cartActions.getOneCart(userId));
-      } else {
-        let userId = uuid();
-        localStorage.setItem('userId', userId)
-        dispatch(cartActions.postOneCart(userId))
-          .then(dispatch(cartActions.getOneCart(userId)));
-      };
-    })
+      .then(() => {
+        let userId = localStorage.getItem('userId');
+        if (userId) {
+          dispatch(cartActions.getOneCart(userId));
+        } else {
+          let userId = uuid();
+          localStorage.setItem('userId', userId)
+          dispatch(cartActions.postOneCart(userId))
+            .then(dispatch(cartActions.getOneCart(userId)));
+        };
+      })
   };
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-        <NavLink to="/cart">My Cart</NavLink>
-        <NavLink to="/orders">My Orders</NavLink>
-        {sessionUser ?
-          (
-            <>
-              <button className='logout' onClick={logOut}>Log Out</button>
-            </>
-          ) :
-          (
-            <>
-              <NavLink to="/login">Log In</NavLink>
-              <NavLink to="/signup">Sign Up</NavLink>
-            </>
-          )
-        }
-      </li>
-    </ul>
+    <nav>
+      <NavLink exact to="/">Home</NavLink>
+      <NavLink to="/cart">My Cart</NavLink>
+      <NavLink to="/orders">My Orders</NavLink>
+      {sessionUser ?
+        (
+          <>
+            <button className='logout' onClick={logOut}>Log Out</button>
+          </>
+        ) :
+        (
+          <>
+            <NavLink to="/login">Log In</NavLink>
+            <NavLink to="/signup">Sign Up</NavLink>
+          </>
+        )
+      }
+    </nav>
   );
 }
 

@@ -1,0 +1,27 @@
+.home {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.item-container {
+    width: 200px;
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.item-container > img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+h3 {
+    margin: 0;
+}
+
+h6 {
+    font-weight: 300;
+    margin: 0;
+}

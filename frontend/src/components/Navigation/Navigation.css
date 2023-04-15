@@ -1,0 +1,24 @@
+nav {
+    background-color: var(--royal-blue);
+    margin: 0;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav > * {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    transition: .5s;
+    color: white;
+    font-weight: 300;
+}
+
+nav > *:hover {
+    background-color: var(--dark-blue);
+    font-weight: 500;
+}

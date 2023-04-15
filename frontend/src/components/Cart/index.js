@@ -11,7 +11,7 @@ function Cart() {
     if (!cart) return null;
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div className='main' style={{ display: 'flex' }}>
             <input type='number' onChange={e => setItemQuantity(e.target.value)}></input>
             {
                 Object.values(cart.cartItems).map(cartItem => (

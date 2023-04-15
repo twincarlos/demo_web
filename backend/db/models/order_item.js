@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
+    itemImage: {
+      type: DataTypes.STRING
+    },
     itemDescription: {
       type: DataTypes.TEXT
     },
