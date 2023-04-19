@@ -17,13 +17,11 @@ button {
 
 body {
     margin: 0;
-    width: 100vw;
-    height: 100dvh;
 }
 
 .main {
-    height: 100vh;
-    overflow: scroll;
+    padding-top: 100px;
+    overflow-x: hidden;
 }
 
 :root {
