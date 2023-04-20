@@ -1,0 +1,31 @@
+@media screen and (min-width: 1000px) {
+    .cart {
+        display: flex;
+    }
+
+    #cart-items {
+        width: 75vw;
+        margin: 5px;
+    }
+
+    #cart-details {
+        width: 25vw;
+        border: 1px solid whitesmoke;
+        margin: 5px;
+        height: 200px;
+    }
+
+    .cart-item {
+        display: flex;
+        border: 1px solid whitesmoke;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .cart-item > img {
+        width: 20%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        padding: 10px;
+    }
+}
