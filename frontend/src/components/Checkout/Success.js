@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import * as orderActions from '../../store/thunks/order';
+import * as cartActions from '../../store/thunks/cart';
 
 function Success() {
     const { stripeCheckoutId, cartId, userId, netTotal } = useParams();
@@ -17,7 +18,8 @@ function Success() {
             userPhoneNumber: '3053388415',
             confirmationNumber: stripeCheckoutId,
             netTotal
-        }));
+        }))
+            .then(res => res && dispatch(cartActions.deleteAllCartItems(cartId)))
     }, [cartId, dispatch, userId, stripeCheckoutId, netTotal]);
 
     return (

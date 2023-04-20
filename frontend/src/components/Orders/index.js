@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import './Order.css';
 
 function Orders() {
     const orders = useSelector(state => state.session.orders);
@@ -6,19 +7,20 @@ function Orders() {
     if (!orders) return null;
 
     return (
-        <div>
+        <div className='main orders'>
             {
                 Object.values(orders).map(order => 
-                    (<div key={order.id}>
-                        {
-                            order.orderItems.map(orderItem => (
-                                <div key={orderItem.id}>
-                                    <p>{orderItem.itemName}</p>
-                                    <p>{orderItem.itemQuantity} X ${orderItem.itemPrice} = {orderItem.netTotal}</p>
-                                </div>
-                            ))
-                        }
-                        <b>${order.netTotal}</b>
+                    (<div className='order' key={order.id}>
+                        <p>Order number: <b>{order.confirmationNumber}</b></p>
+                        <p>Subtotal: <b>${order.netTotal}</b></p>
+                        <p>Date: {new Date(order.createdAt).toDateString()}</p>
+                        <span className='order-item-images'>
+                            {
+                                order.orderItems.map(orderItem => (
+                                    <img src={orderItem.itemImage} key={orderItem.id} alt=''/>
+                                ))
+                            }
+                        </span>
                     </div>)
                 )
             }

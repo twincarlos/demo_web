@@ -61,6 +61,7 @@ router.post('/checkout/:cartId', async (req, res) => {
     return res.json(stripeCheckout);
 });
 
+// POST ORDER
 router.post('/', async (req, res) => {
     const { userId, cartId, userFirstName, userLastName, userEmail, userPhoneNumber, confirmationNumber, netTotal } = req.body;
 
