@@ -12,6 +12,7 @@ import Cart from "./components/Cart";
 import Orders from "./components/Orders";
 import Success from "./components/Checkout/Success";
 import Cancel from "./components/Checkout/Cancel";
+import Item from "./components/Item";
 import { v4 as uuid } from 'uuid';
 
 function App() {
@@ -59,6 +60,9 @@ function App() {
           </Route>
           <Route exact path="/orders">
             <Orders />
+          </Route>
+          <Route exact path="/item/:itemId">
+            <Item />
           </Route>
           <Route exact path="/stripe-checkout/success/:stripeCheckoutId/:cartId/:userId/:netTotal">
             <Success />

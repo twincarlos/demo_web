@@ -15,7 +15,7 @@ const getItems = items => {
 
 const getItem = item => {
     return {
-        type: GET_ITEMS,
+        type: GET_ITEM,
         item
     };
 };

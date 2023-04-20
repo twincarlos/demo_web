@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import * as itemActions from '../../store/thunks/item';
 import './Home.css';
 
@@ -20,15 +21,12 @@ function Home() {
             {
                 Object.values(items).map(item => (
                     <div className='item-container' key={item.id}>
-                        <img src={item.image} alt=''/>
+                        <img src={item.image} alt='' onClick={() => <Redirect to={`/item/${item.id}`}/>}/>
                         <div className='item-details'>
                             <p className='item-name'>{item.name}</p>
                             <p className='item-description'>{item.description}</p>
                             <p className='item-price'>${item.price}</p>
                             <p className='item-stock'>{item.stock} left</p>
-                            {/* <button className='add-item-button' onClick={() => {
-                                dispatch(cartActions.postOneCartItem({ cartId: cart.cartDetails.id, itemId: item.id, quantity: Number(itemQuantity) }));
-                            }}>Add to cart</button> */}
                         </div>
                     </div>
                 ))
