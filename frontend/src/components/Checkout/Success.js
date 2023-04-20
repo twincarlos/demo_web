@@ -18,7 +18,7 @@ function Success() {
             confirmationNumber: stripeCheckoutId,
             netTotal
         }));
-    }, [dispatch]);
+    }, [cartId, dispatch, userId, stripeCheckoutId, netTotal]);
 
     return (
         <div>

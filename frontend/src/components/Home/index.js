@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as itemActions from '../../store/thunks/item';
 import './Home.css';
 
 function Home() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const items = useSelector(state => state.session.items);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -21,7 +22,7 @@ function Home() {
             {
                 Object.values(items).map(item => (
                     <div className='item-container' key={item.id}>
-                        <img src={item.image} alt='' onClick={() => <Redirect to={`/item/${item.id}`}/>}/>
+                        <img src={item.image} alt='' onClick={() => history.push(`/item/${item.id}`)}/>
                         <div className='item-details'>
                             <p className='item-name'>{item.name}</p>
                             <p className='item-description'>{item.description}</p>
